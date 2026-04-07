@@ -18,72 +18,93 @@ Input Constraints
 
 The function enforces the following constraints:
 
-n > 0
-n < 48
-Reason for Constraint
+0 < n < 48
+
+## Reason for Constraint
 
 Java’s int type has a maximum value of 2,147,483,647.
 When n >= 48, the sum of Fibonacci numbers exceeds this limit, causing integer overflow and resulting in incorrect (negative) values.
 
 Example
-Input (Event JSON)
+
+## Input (Event JSON)
+
 {
-  "n": 10
+"n": 10
 }
-Output
+
+## Output
+
 [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
-Project Structure
-src/
-├── main/
-│   ├── java/com/example/
-│   │   └── LambdaFibonacci.java
-│   └── resources/
-│       └── application.properties
-├── test/
-│   └── java/com/example/
-│       └── TestLambdaFibonacci.java
-pom.xml
-Build Instructions
-Prerequisites
-Java 17
+
+## Project Structure
+
+```text
+├── pom.xml
+├── README.md
+├── src/
+│   ├── main/
+│   │   ├── java/com/example/
+│   │   │   └── LambdaFibonacci.java
+│   │   └── resources/
+│   │       └── application.properties
+│   └── test/
+│       └── java/com/example/
+│           └── TestLambdaFibonacci.java
+```
+
+## Build Instructions for Windows Platform
+
+Prerequisites:  
+Java 17 jdk  
 Maven
-Build the Project
+
+## Build the Project
 
 Run the following command from the root directory:
 
 mvn clean package -DskipTests
-Build Output
 
 After the build completes, the .jar files will be located in:
 
-target/
+target folder
 
 The target folder will contain two JAR files:
 
 A standard JAR (smaller size)
 A fat JAR (larger size)
 
-Important: For AWS Lambda deployment, you must use the fat JAR (the larger file), because it includes all required dependencies.
+Note: For AWS Lambda deployment, you must use the fat JAR (the larger file), because it includes all required dependencies.
 
-AWS Lambda Deployment
-Log in to AWS Management Console
-Navigate to AWS Lambda
-Click Create function
-Select:
-Runtime: Java 17
-Upload the fat JAR file from the target/ directory
+## AWS Lambda Deployment
+
+Log in to AWS Management Console  
+Navigate to AWS Lambda  
+Click Create function  
+Select: Author from scratch  
+Function name: Choose a name  
+Runtime: Java 17  
+Architecture: select x86_64  
+Click "Create Function"  
+Select the "Code" tab  
+Click "Upload from" dropdown, and select "zip or jar file" from the dropdown  
+upload the fat JAR file from the target folder  
 Fill out the Handler field in the Code tab. Set it to:
+
 com.example.LambdaFibonacci::handleRequest
-Deploy the function
-Testing in AWS Lambda
-Go to your deployed Lambda function in the AWS Console
+
 Click on the Test tab
+
+## Testing in AWS Lambda
+
+Event name: Choose a name  
 Supply an Event JSON similar to the following:
 {
-  "n": 5
-}
-Click Test to execute the Lambda function and view the results
-Why Use AWS Lambda?
+"n": 5
+}  
+click Save, and then click Test to execute the Lambda function and view the results
+
+## Why Use AWS Lambda?
 
 AWS Lambda is a serverless computing service that allows you to run code without provisioning or managing servers. Its advantages include:
 
@@ -95,7 +116,7 @@ Easy deployment: Upload a JAR, ZIP, or container image, and Lambda handles the r
 
 This project is a Serverless Application, showing how Java code can be executed in AWS Lambda in response to events, without managing servers. It demonstrates the integration of Java applications with a serverless architecture.
 
-How It Works
+## How It Works
 
 AWS Lambda runs each function in its own isolated container, similar to a standalone Docker container. When you create a Lambda function:
 
@@ -106,11 +127,10 @@ Billing: After execution, AWS calculates the cost based on allocated memory × e
 
 This architecture allows serverless, event-driven execution without managing servers, and ensures you only pay for the compute time your function actually uses.
 
-Repository
+## Repository
 
 https://github.com/jneman/LambdaFibonacci
 
 Author
 
 J Neman
-
